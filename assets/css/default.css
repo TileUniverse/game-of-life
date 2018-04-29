@@ -51,14 +51,14 @@ a{
 }
 
 #board .line{
-	height: 20px;
+	height: 40px;
 	width: 100%;
 }
 
 #board .line .column{
 	border: 1px solid #000;
-	width: 20px;
-	height: 20px;
+	width: 40px;
+	height: 40px;
 	float: left;
 }
 

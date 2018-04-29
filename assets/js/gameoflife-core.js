@@ -308,6 +308,8 @@ var Board = function (element, width, height) {
     BoardMethods.updateGrid = function(){
         var that = this;
 
+        that.getTilesAtTileUniverse();
+
         that.grid.forEach(function(element, index){
 
             element.forEach(function(element2, index2){
@@ -340,7 +342,41 @@ var Board = function (element, width, height) {
 
         });
 
+        that.postToTileUniverse();
     };
+
+    /**
+     * @internal endpoint: http://tilesuniverse:3000/
+     *
+     * $.post('/', function (req, res) {
+     *   const x = req.body.x;
+     *   const y = req.body.y;
+     *   const data = req.body.data;
+     * });
+     *
+     * 
+     */
+    BoardMethods.postToTileUniverse = function() {
+        var postData = {tiles: JSON.stringify(this.grid)};
+
+        $.ajax({
+            method: "POST",
+            url: 'http://tilesuniverse:3000/',
+            data: postData
+        })
+        .done(function( result ) {
+            console.log( result );
+        });
+    }
+
+    /**
+     * @internal endpoint: http://tilesuniverse:3000/
+     */
+    BoardMethods.getTilesAtTileUniverse = function() {
+        $.get('http://tilesuniverse:3000/', function(result){
+            console.log(result);
+        });
+    }
 
     /**
      * Change on DOM the status based on the "action"
@@ -358,24 +394,15 @@ var Board = function (element, width, height) {
             current_line,
             current_column;
 
-        if( that.getCellStatus(line, column) ){
+        current_board = $('#board');
+        current_line = current_board.find('.line')[line];
+        current_column = $(current_line).find('.column')[column];
 
-            current_board = $('#board');
-            current_line = current_board.find('.line')[line];
-            current_column = $(current_line).find('.column')[column];
-            
+        if (that.getCellStatus(line, column)) {
             $(current_column).addClass('live');
-
-        }else{
-
-        	current_board = $('#board');
-            current_line = current_board.find('.line')[line];
-            current_column = $(current_line).find('.column')[column];
-
+        } else {
             $(current_column).removeClass('live');
-
         }
-
     };
 
     /**
