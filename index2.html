@@ -39,7 +39,8 @@
 		crossorigin="anonymous"></script>
 
 	<!-- <script type="text/javascript" src="assets/js/build/script.js"></script> -->
-	<script type="text/javascript" src="assets/js/gameoflife-core.js"></script>
+	<!-- <script type="text/javascript" src="assets/js/gameoflife-core.js"></script> -->
+	<script type="text/javascript" src="assets/js/gameoflife-core2.js"></script>
 
 	<!-- <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script> -->
 	<script src="node_modules/socket.io-client/dist/socket.io.js"></script>
@@ -57,18 +58,13 @@
 
 			board = new Board(element, width, height);
 
-			// setTimeout(function(){
-				// socket = io('http://tilesuniverse.local:4000');
-				// socket.on('game_update_sequence', function(game_state){
-				// 	if(!emiter) {
-				// 		console.log(game_state);	
-				// 		board.grid = game_state.tiles;
-				// 		board.applySatusToDOM();
-				// 	}
-		        // });
-		    // }, 1000);
-
-		    board.gretCurrentState();
+			socket = io('http://tilesuniverse.local:4000');
+			// socket.on('game_update_sequence', function(game_state){
+			// 	if(!emiter) {
+			// 		board.grid = game_state;
+			// 		board.applySatusToDOM();
+			// 	}
+	        // });
 
 			$('.column').on('click',function(){
 				var that = this;

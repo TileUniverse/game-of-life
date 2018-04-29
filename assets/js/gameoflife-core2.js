@@ -338,7 +338,7 @@ var Board = function (element, width, height) {
 
     BoardMethods.applySatusToDOM = function() {
         var that = this;
-        
+
         that.grid.forEach(function(element, index){
 
             element.forEach(function(element2, index2){
@@ -366,67 +366,29 @@ var Board = function (element, width, height) {
      * 
      */
     BoardMethods.postToTileUniverse = function() {
-        var that = this;
         // var postData = {tiles: JSON.stringify(this.grid)};
-        // console.log(that.grid);
 
-        $.ajax({
-            method: "GET",
-            url: "http://tilesuniverse:3000",
-            crossDomain: true,
-            success: function(result){
-                var postRequestData = that.grid.forEach(function(row, index){
-                    row.forEach(function(tile, index2){
-                        result.map(function(result_row){
-                            if(
-                                result_row.x === index 
-                                && result_row.y === index2
-                            ){
-                                result_row.weather = tile;
-                            }
-                            return result_row;
-                        });
-                    });
-                });
+        // $.ajax({
+        //     method: "POST",
+        //     url: 'http://tilesuniverse:3000/',
+        //     data: postData
+        // })
+        // .done(function( result ) {
+        //     console.log( result );
+        // });
 
-                console.log(result);
-
-                $.ajax({
-                    method: "POST",
-                    url: 'http://tilesuniverse:3000/',
-                    data: {tiles: JSON.stringify(result)}
-                })
-                .done(function( result2 ) {
-                    console.log( result2 );
-                });
-            }
-        });
-
-        // emiter = true;
-
-        // socket.emit('game_update_be', postData);
+        socket.emit('game_update_be2', this.grid);
 
         return false;
-    }
-
-    BoardMethods.gretCurrentState = function(){
-        $.ajax({
-            method: "GET",
-            url: "http://tilesuniverse:3000",
-            crossDomain: true,
-            success: function(result){
-                
-            }
-        });
     }
 
     /**
      * @internal endpoint: http://tilesuniverse:3000/
      */
     // BoardMethods.getTilesAtTileUniverse = function() {
-        // $.get('http://tilesuniverse:3000/', function(result){
-        //     console.log(result);
-        // });
+    //     $.get('http://tilesuniverse:3000/', function(result){
+    //         console.log(result);
+    //     });
     // }
 
     /**
